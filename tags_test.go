@@ -1,8 +1,8 @@
 package tagit_test
 
 import (
-	tagit "."
 	"encoding/json"
+	"github.com/ndyakov/tagit"
 	"reflect"
 	"testing"
 )

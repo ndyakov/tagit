@@ -1,7 +1,7 @@
 package tagit_test
 
 import (
-	tagit "."
+	"github.com/ndyakov/tagit"
 	"reflect"
 	"testing"
 )
