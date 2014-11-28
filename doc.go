@@ -20,5 +20,4 @@ on your type.
 
 When using tagit.Tags you will have to initialize it with the tagit.NewTags() function.
 */
-
 package tagit
