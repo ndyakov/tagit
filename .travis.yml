@@ -7,4 +7,5 @@ go:
  - tip
 
 script:
- - go test -v --cover ./...
+ - go get
+ - go test -v ./...
