@@ -2,6 +2,7 @@ package tagit
 
 import (
 	"errors"
+	"gopkg.in/mgo.v2/bson"
 	"strconv"
 )
 
@@ -131,5 +132,24 @@ func (t *Tags) UnmarshalJSON(json []byte) error {
 			}
 		}
 	}
+	return nil
+}
+
+func (t *Tags) GetBSON() (interface{}, error) {
+	return t.All(), nil
+}
+
+func (t *Tags) SetBSON(raw bson.Raw) error {
+	tags := make([]string, 0)
+	err := raw.Unmarshal(&tags)
+
+	if err != nil {
+		return err
+	}
+
+	for _, tag := range tags {
+		t.Add(tag)
+	}
+
 	return nil
 }
