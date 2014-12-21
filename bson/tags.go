@@ -135,12 +135,20 @@ func (t *Tags) UnmarshalJSON(json []byte) error {
 	return nil
 }
 
+// GetBSON is actually implementing the bson.Getter
+// interface so this can be Marshaled into bson.
+// This may be added to the basic tagit implementation
+// because it doesn't require any new imports.
 func (t *Tags) GetBSON() (interface{}, error) {
 	return t.All(), nil
 }
 
+// SetBSON is implementing the bson.Setter interface
+// so this can be Unmarshaled from bson.
+// To implement the Setter interface we need to import
+// the bson package, so we can have the bson.Raw type available.
 func (t *Tags) SetBSON(raw bson.Raw) error {
-	tags := make([]string, 0)
+	tags := []string{}
 	err := raw.Unmarshal(&tags)
 
 	if err != nil {
