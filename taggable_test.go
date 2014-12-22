@@ -1,9 +1,10 @@
 package tagit_test
 
 import (
-	"github.com/ndyakov/tagit"
 	"reflect"
 	"testing"
+
+	"github.com/ndyakov/tagit"
 )
 
 type Article struct {

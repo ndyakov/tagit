@@ -2,10 +2,11 @@ package tagit_test
 
 import (
 	"encoding/json"
-	"github.com/ndyakov/tagit/bson"
-	"gopkg.in/mgo.v2/bson"
 	"reflect"
 	"testing"
+
+	"github.com/ndyakov/tagit/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type Comment struct {

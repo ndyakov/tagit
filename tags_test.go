@@ -2,9 +2,10 @@ package tagit_test
 
 import (
 	"encoding/json"
-	"github.com/ndyakov/tagit"
 	"reflect"
 	"testing"
+
+	"github.com/ndyakov/tagit"
 )
 
 type Comment struct {

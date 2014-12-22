@@ -2,8 +2,9 @@ package tagit
 
 import (
 	"errors"
-	"gopkg.in/mgo.v2/bson"
 	"strconv"
+
+	"gopkg.in/mgo.v2/bson"
 )
 
 // Tags struct that holds tags and have a simple interface for working with
