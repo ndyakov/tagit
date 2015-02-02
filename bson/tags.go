@@ -16,9 +16,14 @@ type Tags struct {
 
 // NewTags is a constructor for Tags.
 // You should initialize your tags with this function.
-func NewTags() *Tags {
+func NewTags(tags ...string) *Tags {
 	t := new(Tags)
 	t.initTags()
+
+	for _, tag := range tags {
+		t.Add(tag)
+	}
+
 	return t
 }
 
