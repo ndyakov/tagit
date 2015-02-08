@@ -3,6 +3,7 @@ package tagit
 import (
 	"errors"
 	"strconv"
+	"strings"
 
 	"gopkg.in/mgo.v2/bson"
 )
@@ -44,20 +45,20 @@ func (t *Tags) All() []string {
 // Returns boolean.
 func (t *Tags) Has(tag string) bool {
 	t.initTags()
-	_, ok := t.tags[tag]
+	_, ok := t.tags[strings.TrimSpace(tag)]
 	return ok
 }
 
 // Add adds a tag to the list.
 func (t *Tags) Add(tag string) {
 	t.initTags()
-	t.tags[tag] = struct{}{}
+	t.tags[strings.TrimSpace(tag)] = struct{}{}
 }
 
 // Remove removes a tag from the list.
 func (t *Tags) Remove(tag string) {
 	t.initTags()
-	delete(t.tags, tag)
+	delete(t.tags, strings.TrimSpace(tag))
 }
 
 // Count counts the number of tags and return it as int.
