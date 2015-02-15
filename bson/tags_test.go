@@ -19,6 +19,12 @@ func NewComment() *Comment {
 	return c
 }
 
+func NewCommentWithTags(tags ...string) *Comment {
+	c := new(Comment)
+	c.Tags = tagit.NewTags(tags...)
+	return c
+}
+
 func equalSlices(expected, got []string) bool {
 	if len(expected) != len(got) {
 		return false
@@ -41,6 +47,23 @@ func equalSlices(expected, got []string) bool {
 	}
 
 	return true
+}
+
+func TestTagsNewTags(t *testing.T) {
+	c := NewCommentWithTags("wow")
+	tags := c.Tags.All()
+	expected := []string{"wow"}
+	if !reflect.DeepEqual(tags, expected) {
+		t.Errorf("Wrong tags! Expected %#v, but got %#v!\n", expected, tags)
+	}
+
+	c = NewCommentWithTags("wow", "such")
+	tags = c.Tags.All()
+	expected1 := []string{"wow", "such"}
+	expected2 := []string{"such", "wow"}
+	if !reflect.DeepEqual(tags, expected1) && !reflect.DeepEqual(tags, expected2) {
+		t.Errorf("Wrong tags! Expected %#v, but got %#v!\n", expected, tags)
+	}
 }
 
 func TestTagsAdd(t *testing.T) {
@@ -104,6 +127,17 @@ func TestTagsString(t *testing.T) {
 	if got != expected1 && got != expected2 {
 		t.Errorf("Expected String() to return %s or %s but got: %s!", expected1, expected2, got)
 	}
+
+	// Empty tags
+	c = NewComment()
+	got = c.Tags.String()
+
+	expected := ""
+
+	if got != expected {
+		t.Errorf("Expected String() to return %s but got: %s!", expected, got)
+	}
+
 }
 
 func TestTagsMarshalJSON(t *testing.T) {
@@ -120,6 +154,19 @@ func TestTagsMarshalJSON(t *testing.T) {
 
 	if !reflect.DeepEqual(got, expected1) && !reflect.DeepEqual(got, expected2) {
 		t.Errorf("Expected MarshalJSON() to return %s or %s but got: %s!", expected1, expected2, got)
+	}
+
+	// Empty tags
+	c = NewComment()
+	got, err = c.Tags.MarshalJSON()
+	if err != nil {
+		t.Error(err)
+	}
+
+	expected := []byte(`[]`)
+
+	if !reflect.DeepEqual(got, expected) {
+		t.Errorf("Expected MarshalJSON() to return %s but got: %s!", expected, got)
 	}
 }
 
@@ -201,6 +248,7 @@ func TestTagsMarshalUnmarshalBSON(t *testing.T) {
 	c := NewComment()
 	c.Tags.Add("test")
 	c.Tags.Add("bson")
+
 	serialized, err := bson.Marshal(c)
 	if err != nil {
 		t.Errorf("Error returned while marshaling to bson: %s", err)
@@ -211,10 +259,25 @@ func TestTagsMarshalUnmarshalBSON(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error returned while unmarshaling from bson: %s", err)
 	}
+
 	expected := c.Tags.All()
 	got := unserialized.Tags.All()
 
 	if !equalSlices(expected, got) {
 		t.Errorf("Tags are not the one that we expected them to be: got: %v, expected: %v", got, expected)
 	}
+
+	// Incorect data
+	incorectData := []byte("123")
+	err = bson.Unmarshal(incorectData, &unserialized)
+	if err == nil {
+		t.Errorf("Expected to get an error when unmarshaling invalid data.")
+	}
+
+	raw := bson.Raw{Kind: 1, Data: incorectData}
+	err = c.Tags.SetBSON(raw)
+	if err == nil {
+		t.Errorf("Expected to get an error when setting incorect data.")
+	}
+
 }
