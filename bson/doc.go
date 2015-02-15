@@ -1,15 +1,9 @@
 /*
-Tagit is a package that exports two types
+Package tagit/bson is a package that exports a type
 that can be used to add tag lists to your structs.
-The first of them (tagit.Taggable) can be used as anonymous field
-in a struct:
 
-	type Article {
-		tagit.Taggable
-	}
-
-The other one (tagit.Tags) is designed to be used as an field in
-a struct (composition) and is the prefered way of using taggit:
+The tagit.Tags is designed to be used as an field in
+a struct (composition) like so:
 
 	type Article {
 		Tags *tagit.Tags `json:"tags"`
@@ -17,6 +11,9 @@ a struct (composition) and is the prefered way of using taggit:
 
 By using tagit.Tags you will be able to use json.Marshal and json.Unmarshal
 on your type.
+
+You will be able to use mgo/bson with this package. The type tagit.Tags knows how to
+be marshalled and unmarshalled to/from bson.
 
 When using tagit.Tags you will have to initialize it with the tagit.NewTags() function.
 */

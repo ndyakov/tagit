@@ -1,5 +1,5 @@
 /*
-Tagit is a package that exports two types
+Package tagit is a package that exports two types
 that can be used to add tag lists to your structs.
 The first of them (tagit.Taggable) can be used as anonymous field
 in a struct:

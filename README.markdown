@@ -39,7 +39,7 @@ When using `tagit.Tags` you will have to initialize it with the `tagit.NewTags()
 
 ```
 type Tags
-  func NewTags() *Tags
+  func NewTags(tags ...string) *Tags
   func (t *Tags) Add(tag string)
   func (t *Tags) All() []string
   func (t *Tags) Count() int
@@ -77,6 +77,18 @@ func main() {
 
 ```
 
+You can also initialize *tagit.Tags with initial set of tags.
+
+```go
+func main() {
+	tags := tagit.NewTags("wow", "such", "tags")
+	tags.All()  // ['wow', "such", "tags"]
+	tags.Has("example") // false
+	tags.Has("wow")     // true
+	tags.Count()        // 3
+}
+```
+
 ## Tagit + bson
 [![GoDoc](https://godoc.org/github.com/ndyakov/tagit/bson?status.png)](https://godoc.org/github.com/ndyakov/tagit/bson)
 
@@ -96,6 +108,7 @@ Marshaled to BSON and Unmarshaled from BSON. This can be used with mgo.
 
 ```
 
+tagit/bson's Tags type obeys the same interface as tagit.Tags.
 
 #### Why are there different packages with almost the same type?
 
@@ -105,3 +118,10 @@ an which one you should use.
 The main reason is that working with bson, for example, needs additional imports and I want to
 keep the root package as slim as possible. Althought this will be harder to maintain I think it is a
 reasonable solutions for small package as this one.
+
+
+## Contributions
+
+Before contributing please execute:
+* gofmt
+* golint

@@ -10,13 +10,15 @@ import (
 
 // Tags struct that holds tags and have a simple interface for working with
 // the tags. By composing this the list of tags will be able
-// to be marshalled/unmarshalled to/from JSON.
+// to be marshalled/unmarshalled to/from JSON or bson.
 type Tags struct {
 	tags map[string]struct{}
 }
 
 // NewTags is a constructor for Tags.
 // You should initialize your tags with this function.
+// This function can accept variable number of string agruments
+// as an initial set of tags for the created object.
 func NewTags(tags ...string) *Tags {
 	t := new(Tags)
 	t.initTags()
@@ -105,7 +107,7 @@ func (t *Tags) UnmarshalJSON(json []byte) error {
 	var quote, backSlash, leftBracket, rightBracket byte
 	quote, leftBracket, backSlash, rightBracket = 34, 91, 92, 93
 	if json[0] != leftBracket || json[len(json)-1] != rightBracket {
-		return errors.New("The JSON is not a list")
+		return errors.New("provided JSON is not a list")
 	}
 	var wordBytes []byte
 	inWord := false
