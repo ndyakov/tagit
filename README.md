@@ -6,6 +6,45 @@
 __tagit__ is a package that exports two types
 that can be used to add tag lists to your structs.
 
+## Example
+
+```
+go get github.com/ndyakov/tagit
+```
+
+```go
+
+type Article struct {
+	Name string      `json:"name"`
+	Tags *tagit.Tags `json:"tags"`
+}
+
+func NewArticle(name) *Article {
+	return &Article{Name: name, Tags: tagit.NewTags()}
+}
+
+func main() {
+	a := NewArticle("Tagit!")
+	a.Tags.Add("example")
+	tags := a.Tags.All()  // ['example']
+	a.Tags.Has("example") // true
+	a.Tags.Count()        // 1
+}
+
+```
+
+You can also initialize *tagit.Tags with initial set of tags.
+
+```go
+func main() {
+	tags := tagit.NewTags("wow", "such", "tags")
+	tags.All()  // ['wow', "such", "tags"]
+	tags.Has("example") // false
+	tags.Has("wow")     // true
+	tags.Count()        // 3
+}
+```
+
 ### Taggable
 
 __This may be removed, because I don't see why anyone whould like to use it instead of `Tags`__
@@ -48,45 +87,6 @@ type Tags
   func (t *Tags) Remove(tag string)
   func (t *Tags) String() (res string)
   func (t *Tags) UnmarshalJSON(json []byte) error
-```
-
-## Usage
-
-```
-go get github.com/ndyakov/tagit
-```
-
-```go
-
-type Article struct {
-	Name string      `json:"name"`
-	Tags *tagit.Tags `json:"tags"`
-}
-
-func NewArticle(name) *Article {
-	return &Article{Name: name, Tags: tagit.NewTags()}
-}
-
-func main() {
-	a := NewArticle("Tagit!")
-	a.Tags.Add("example")
-	tags := a.Tags.All()  // ['example']
-	a.Tags.Has("example") // true
-	a.Tags.Count()        // 1
-}
-
-```
-
-You can also initialize *tagit.Tags with initial set of tags.
-
-```go
-func main() {
-	tags := tagit.NewTags("wow", "such", "tags")
-	tags.All()  // ['wow', "such", "tags"]
-	tags.Has("example") // false
-	tags.Has("wow")     // true
-	tags.Count()        // 3
-}
 ```
 
 ## Tagit + bson
