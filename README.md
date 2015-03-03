@@ -1,7 +1,9 @@
 # tagit
 
 [![BuildStatus](https://travis-ci.org/ndyakov/tagit.png)](https://travis-ci.org/ndyakov/tagit)
+[![Coverage Status](https://coveralls.io/repos/ndyakov/tagit/badge.svg?branch=master)](https://coveralls.io/r/ndyakov/tagit?branch=master)
 [![GoDoc](https://godoc.org/github.com/ndyakov/tagit?status.png)](https://godoc.org/github.com/ndyakov/tagit)
+[![status](https://sourcegraph.com/api/repos/github.com/ndyakov/tagit/.badges/status.svg)](https://sourcegraph.com/github.com/ndyakov/tagit)
 
 __tagit__ is a package that exports two types
 that can be used to add tag lists to your structs.
