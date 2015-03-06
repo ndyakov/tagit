@@ -49,7 +49,7 @@ func equalSlices(expected, got []string) bool {
 	return true
 }
 
-func TestTagsNewTags(t *testing.T) {
+func TestTags_NewTags(t *testing.T) {
 	c := NewCommentWithTags("wow")
 	tags := c.Tags.All()
 	expected := []string{"wow"}
@@ -66,7 +66,7 @@ func TestTagsNewTags(t *testing.T) {
 	}
 }
 
-func TestTagsAdd(t *testing.T) {
+func TestTags_Add(t *testing.T) {
 	c := NewComment()
 	c.Tags.Add("wow")
 	tags := c.Tags.All()
@@ -76,7 +76,7 @@ func TestTagsAdd(t *testing.T) {
 	}
 }
 
-func TestTagsCount(t *testing.T) {
+func TestTags_Count(t *testing.T) {
 	c := NewComment()
 	c.Tags.Add("wow")
 	c.Tags.Add("such")
@@ -88,7 +88,7 @@ func TestTagsCount(t *testing.T) {
 	}
 }
 
-func TestTagsHas(t *testing.T) {
+func TestTags_Has(t *testing.T) {
 	c := NewComment()
 	c.Tags.Add("wow")
 	if !c.Tags.Has("wow") {
@@ -100,7 +100,7 @@ func TestTagsHas(t *testing.T) {
 	}
 }
 
-func TestTagsRemove(t *testing.T) {
+func TestTags_Remove(t *testing.T) {
 	c := NewComment()
 	c.Tags.Add("wow")
 
@@ -115,7 +115,7 @@ func TestTagsRemove(t *testing.T) {
 	}
 }
 
-func TestTagsString(t *testing.T) {
+func TestTags_String(t *testing.T) {
 	c := NewComment()
 	c.Tags.Add("w\"ow")
 	c.Tags.Add("such")
@@ -140,7 +140,7 @@ func TestTagsString(t *testing.T) {
 
 }
 
-func TestTagsMarshalJSON(t *testing.T) {
+func TestTags_MarshalJSON(t *testing.T) {
 	c := NewComment()
 	c.Tags.Add("wow")
 	c.Tags.Add("such")
